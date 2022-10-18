@@ -1,6 +1,6 @@
 package com.burak.repository.enums;
 
-public enum Activated {
+public enum Status {
 
     ACTIVE, INACTIVE, DELETED, BANNED, PENDING
 }

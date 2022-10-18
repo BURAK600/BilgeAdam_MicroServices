@@ -50,6 +50,8 @@ allprojects{
         implementation libs.springBootStarterWeb
         implementation libs.lombok
         annotationProcessor libs.lombok
+        implementation libs.springBootValidation
+        implementation libs.swaggerui
 
     }
 }
