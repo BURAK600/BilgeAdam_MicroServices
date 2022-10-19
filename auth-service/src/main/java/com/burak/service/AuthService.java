@@ -2,28 +2,32 @@ package com.burak.service;
 
 import com.burak.dto.request.AuthLoginRequestDto;
 import com.burak.dto.request.AuthRegisterRequestDto;
+import com.burak.dto.request.UserProfileSaveRequestDto;
 import com.burak.exception.AuthServiceException;
 import com.burak.exception.ErrorType;
+import com.burak.manager.IUserProfileManager;
 import com.burak.repository.IAuthRepository;
 import com.burak.repository.entity.Auth;
 import com.burak.repository.enums.Roles;
 import com.burak.utility.ServiceManager;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.burak.utility.TokenManager;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
-
 public class AuthService extends ServiceManager<Auth, Long> {
 
     private final IAuthRepository repository;
+    private final TokenManager tokenManager;
 
-    public AuthService(IAuthRepository repository) {
+    private final IUserProfileManager iUserProfileManager;
+
+    public AuthService(IAuthRepository repository, TokenManager tokenManager, IUserProfileManager iUserProfileManager) {
         super(repository);
         this.repository = repository;
+        this.tokenManager = tokenManager;
+        this.iUserProfileManager = iUserProfileManager;
     }
 
     public Boolean save(AuthRegisterRequestDto authRegisterRequestDto){
@@ -38,6 +42,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }};
         save(auth);
         if(auth.getId() != null){
+            iUserProfileManager.save(UserProfileSaveRequestDto.builder()
+                            .authId(auth.getId())
+                            .email(auth.getEmail())
+                            .userName(auth.getUserName())
+                    .build());
             return true;
         }
         return false;
@@ -48,7 +57,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         Optional<Auth> auth = repository.findOptionalByUserNameAndPassword(authLoginRequestDto.getUserName(),
                 authLoginRequestDto.getPassword());
         if(auth.isEmpty()) throw new AuthServiceException(ErrorType.LOGIN_ERROR_001);
-        return "Token: " + auth.get().getId();
+        return tokenManager.generateToken(auth.get().getId());
 
     }
 }

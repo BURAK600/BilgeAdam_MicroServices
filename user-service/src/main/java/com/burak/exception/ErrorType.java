@@ -19,7 +19,8 @@ public enum ErrorType {
 
 
 
-    KULLANICI_ZATEN_KAYITLI(100,"Kullanıcı zaten kayıtlı", INTERNAL_SERVER_ERROR);
+    GECERSIZ_TOKEN(200,"Token bilgisi gecersiz", INTERNAL_SERVER_ERROR),
+    KULLANICI_BULUNAMADI(201,"Kullanıcı kayıtlı degil", INTERNAL_SERVER_ERROR);
 
 
 
