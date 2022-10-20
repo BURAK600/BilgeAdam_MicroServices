@@ -17,6 +17,6 @@ spring:
 
 # JWT
 myjwt:
-  secretkey: ${secretKey}
+  secretKey: ${secretKey}
   audience: ${audience}
   issuer: ${issuer}

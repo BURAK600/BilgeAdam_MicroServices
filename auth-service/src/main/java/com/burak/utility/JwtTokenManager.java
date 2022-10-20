@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Optional;
 @Service
 public class JwtTokenManager {
-    @Value("${myjwt.secretkey")
+    @Value("${myjwt.secretKey")
     private String secretKey;
     @Value("${myjwt.audience")
     private String audience;
