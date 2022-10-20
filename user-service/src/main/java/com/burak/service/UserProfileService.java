@@ -6,8 +6,8 @@ import com.burak.exception.ErrorType;
 import com.burak.exception.UserServiceException;
 import com.burak.repository.IUserProfileRepository;
 import com.burak.repository.entity.UserProfile;
+import com.burak.utility.JwtTokenManager;
 import com.burak.utility.ServiceManager;
-import com.burak.utility.TokenManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,11 +16,12 @@ import java.util.Optional;
 public class UserProfileService extends ServiceManager<UserProfile, Long> {
 
     private final IUserProfileRepository iUserProfileRepository;
-    private final TokenManager tokenManager;
-    public UserProfileService(IUserProfileRepository iUserProfileRepository, TokenManager tokenManager) {
+    private final JwtTokenManager jwtTokenManager;
+    public UserProfileService(IUserProfileRepository iUserProfileRepository, JwtTokenManager jwtTokenManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
-        this.tokenManager = tokenManager;
+
+        this.jwtTokenManager = jwtTokenManager;
     }
 
     public Boolean save(UserProfileSaveRequestDto userProfileSaveRequestDto) {
@@ -32,10 +33,10 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
     }
 
     public Boolean update(UserProfileUpdateRequestDto userProfileUpdateRequestDto){
-        Long authid =tokenManager.getId(userProfileUpdateRequestDto.getToken());
-        if(authid == null) throw new UserServiceException(ErrorType.GECERSIZ_TOKEN);
+        Optional<Long> authid =jwtTokenManager.getByIdFromToken(userProfileUpdateRequestDto.getToken());
+        if(authid.isEmpty()) throw new UserServiceException(ErrorType.GECERSIZ_ID);
 
-        Optional<UserProfile> profile = iUserProfileRepository.findOptionalByAuthId(authid);
+        Optional<UserProfile> profile = iUserProfileRepository.findOptionalByAuthId(authid.get());
 
         if(profile.isEmpty()) throw new UserServiceException(ErrorType.KULLANICI_BULUNAMADI);
 

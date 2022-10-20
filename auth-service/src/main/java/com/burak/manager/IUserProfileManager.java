@@ -19,7 +19,7 @@ import static com.burak.constants.ApiUrls.SAVE;
 public interface IUserProfileManager {
 
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto userProfileSaveRequestDto);
+    ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto userProfileSaveRequestDto);
 
 
 }

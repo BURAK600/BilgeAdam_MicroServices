@@ -19,7 +19,8 @@ public enum ErrorType {
 
 
 
-    KULLANICI_ZATEN_KAYITLI(100,"Kullanıcı zaten kayıtlı", INTERNAL_SERVER_ERROR);
+    KULLANICI_ZATEN_KAYITLI(100,"Kullanıcı zaten kayıtlı", INTERNAL_SERVER_ERROR),
+    GECERSIZ_TOKEN(101,"Bu token geçersizdir", INTERNAL_SERVER_ERROR);
 
 
 

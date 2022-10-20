@@ -20,6 +20,7 @@ public enum ErrorType {
 
 
     GECERSIZ_TOKEN(200,"Token bilgisi gecersiz", INTERNAL_SERVER_ERROR),
+    GECERSIZ_ID(202,"Auth id bilgisi null gelmiştir.", INTERNAL_SERVER_ERROR),
     KULLANICI_BULUNAMADI(201,"Kullanıcı kayıtlı degil", INTERNAL_SERVER_ERROR);
 
 

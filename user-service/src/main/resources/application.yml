@@ -1,5 +1,5 @@
 server:
-  port: 9094
+  port: 9096
 
 spring:
   datasource:
@@ -14,3 +14,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+
+# JWT
+myjwt:
+  secretkey: ${secretKey}
+  audience: ${audience}
+  issuer: ${issuer}
