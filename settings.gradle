@@ -1,4 +1,8 @@
 rootProject.name = 'BilgeAdam_MicroServices'
 include 'auth-service'
 include 'user-service'
+include 'config-server'
+include 'config-server'
+include 'config-server-git'
+include 'config-server-git'
 

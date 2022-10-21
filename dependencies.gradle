@@ -11,19 +11,28 @@ ext{
 
 
 
+
+
     libs = [
 
             springBootStarterWeb     :"org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
             springBootDataJpa        :"org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
             springBootValidation     :"org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
             springCloudOpenFeign    : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
+
+            //
             swaggerui                : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
             mapstruct                : "org.mapstruct:mapstruct:$versions.mapstruct",
             mapstructProcessor       : "org.mapstruct:mapstruct-processor:$versions.mapstruct",
             lombok                   :"org.projectlombok:lombok:$versions.lombok",
             postgresql               :"org.postgresql:postgresql:$versions.postgresql",
             lombokMapstructBinding   : "org.projectlombok:lombok-mapstruct-binding:0.2.0",
-            auth0                    :"com.auth0:java-jwt:$versions.auth0"
+            // jwt entegtasyonu için
+            auth0                    :"com.auth0:java-jwt:$versions.auth0",
+            // Spring Config Server için gerekli bağımlılıklar
+            springCloudStarterConfig: "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
+            springCloudConfigServer : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
+            springCloudConfigClient : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
 
 
 
