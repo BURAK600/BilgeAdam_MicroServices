@@ -11,6 +11,7 @@
         <module name="BilgeAdam_MicroServices.main" />
         <module name="BilgeAdam_MicroServices.auth-service.main" />
         <module name="BilgeAdam_MicroServices.user-service.main" />
+        <module name="BilgeAdam_MicroServices.api-gateway-service.main" />
         <module name="BilgeAdam_MicroServices.config-server.main" />
       </profile>
     </annotationProcessing>
