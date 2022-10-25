@@ -4,12 +4,10 @@ import com.burak.dto.request.UserProfileSaveRequestDto;
 import com.burak.dto.request.UserProfileUpdateRequestDto;
 import com.burak.repository.entity.UserProfile;
 import com.burak.service.UserProfileService;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,5 +49,16 @@ public class UserProfileController {
         return null;
     }
 
+    // REDIS kullanımı
+    @GetMapping("/getupper")
+    public ResponseEntity<String> getUpperCase(Long authId) {
+        return ResponseEntity.ok(userProfileService.getUpperCase(authId));
+    }
 
+
+    @PostMapping("/savecachable")
+    public ResponseEntity<Void> updateUser(@RequestBody UserProfile userProfile){
+        userProfileService.updateCacheReset(userProfile);
+        return ResponseEntity.ok().build();
+    }
 }

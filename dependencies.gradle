@@ -40,5 +40,8 @@ ext{
             springCloudStaterSleuth : "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
             springCloudSleuthZipkin : "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
 
+            // Redis kullanımı için gerekli olan bağımlılıklar
+            springDataRedis         : "org.springframework.boot:spring-boot-starter-data-redis:$versions.springBoot",
+
     ]
 }

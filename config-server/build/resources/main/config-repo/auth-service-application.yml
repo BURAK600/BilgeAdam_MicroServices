@@ -2,6 +2,11 @@ server:
   port: 9088
 
 spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: auth-service
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://34.173.108.167:1111/java3auth

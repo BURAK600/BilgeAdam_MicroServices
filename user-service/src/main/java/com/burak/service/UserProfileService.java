@@ -8,6 +8,9 @@ import com.burak.repository.IUserProfileRepository;
 import com.burak.repository.entity.UserProfile;
 import com.burak.utility.JwtTokenManager;
 import com.burak.utility.ServiceManager;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,11 +20,14 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
 
     private final IUserProfileRepository iUserProfileRepository;
     private final JwtTokenManager jwtTokenManager;
-    public UserProfileService(IUserProfileRepository iUserProfileRepository, JwtTokenManager jwtTokenManager) {
+
+    private final CacheManager cacheManager;
+    public UserProfileService(IUserProfileRepository iUserProfileRepository, JwtTokenManager jwtTokenManager, CacheManager cacheManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
 
         this.jwtTokenManager = jwtTokenManager;
+        this.cacheManager = cacheManager;
     }
 
     public Boolean save(UserProfileSaveRequestDto userProfileSaveRequestDto) {
@@ -50,5 +56,37 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
         save(userProfile);
         return true;
 
+    }
+
+@Cacheable(value = "uppercase")
+    public String getUpperCase(Long autId){
+
+
+        try{
+            Thread.sleep(3000);
+
+        }catch (Exception e){
+
+        }
+
+        Optional<UserProfile> userProfile = iUserProfileRepository.findOptionalByAuthId(autId);
+        if(userProfile.isEmpty()) return "";
+        return userProfile.get().getName().toUpperCase();
+    }
+
+
+    public void updateCacheReset(UserProfile userProfile) {
+        save(userProfile);
+        /**
+         * Bu işlem ilgili method tarafından tutulan tüm önbelleklenmiş datayı temizler
+         */
+
+//        cacheManager.getCache("uppercase").clear();
+
+        /**
+         * Bu işlem ilgili method tarafından tutulan datadan ilgili getAuthId 'nin cache bilgisini siler.
+         */
+
+        cacheManager.getCache("uppercase").evict(userProfile.getAuthId());
     }
 }

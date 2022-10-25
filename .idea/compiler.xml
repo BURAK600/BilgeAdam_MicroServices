@@ -8,11 +8,12 @@
           <entry name="$PROJECT_DIR$/../../../week13/carsamba/Java3Monolithic1/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
         <module name="BilgeAdam_MicroServices.config-server-git.main" />
-        <module name="BilgeAdam_MicroServices.main" />
         <module name="BilgeAdam_MicroServices.auth-service.main" />
+        <module name="BilgeAdam_MicroServices.elastic-service.main" />
         <module name="BilgeAdam_MicroServices.user-service.main" />
-        <module name="BilgeAdam_MicroServices.api-gateway-service.main" />
         <module name="BilgeAdam_MicroServices.config-server.main" />
+        <module name="BilgeAdam_MicroServices.main" />
+        <module name="BilgeAdam_MicroServices.api-gateway-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="18" />

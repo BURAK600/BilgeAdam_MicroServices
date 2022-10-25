@@ -2,6 +2,12 @@ server:
   port: 9096
 
 spring:
+
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: user-service
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://34.173.108.167:1111/java3user
@@ -14,6 +20,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+
+myredis:
+  host: localhost
+  port: 6379
 
 
 # JWT

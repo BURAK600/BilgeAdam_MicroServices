@@ -22,6 +22,11 @@ spring:
         format_sql: true
 
 
+myredis:
+  host: localhost
+  port: 6379
+
+
 # JWT
 myjwt:
   secretkey: ${secretKey}
