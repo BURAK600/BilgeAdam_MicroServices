@@ -20,6 +20,9 @@ spring:
       hibernate:
         format_sql: true
 
+
+
+
 # JWT
 myjwt:
   secretKey: ${secretKey}
