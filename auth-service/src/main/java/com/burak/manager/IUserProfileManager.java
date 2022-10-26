@@ -15,7 +15,7 @@ import static com.burak.constants.ApiUrls.SAVE;
  * name-> benzersiz bir isim olmalıdır. diger türü hata alacaktır.
  */
 
-@FeignClient(name = "user-profile-service", url = "http://localhost:9094/api/v1/userprofile", decode404 =true)
+@FeignClient(name = "user-profile-service", url = "http://localhost:9096/api/v1/userprofile", decode404 =true)
 public interface IUserProfileManager {
 
     @PostMapping(SAVE)

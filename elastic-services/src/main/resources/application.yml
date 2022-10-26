@@ -10,4 +10,11 @@ spring:
     uris: http://localhost:9200
 
 myapplication:
-  user-service: http://localhost:9096/api/v1/user
+  user-service:
+    feign-client: http://localhost:9096/api/v1/userprofile
+
+# JWT
+myjwt:
+  secretkey: ${secretKey}
+  audience: ${audience}
+  issuer: ${issuer}

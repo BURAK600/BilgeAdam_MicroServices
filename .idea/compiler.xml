@@ -13,6 +13,7 @@
         <module name="BilgeAdam_MicroServices.user-service.main" />
         <module name="BilgeAdam_MicroServices.config-server.main" />
         <module name="BilgeAdam_MicroServices.main" />
+        <module name="BilgeAdam_MicroServices.elastic-services.main" />
         <module name="BilgeAdam_MicroServices.api-gateway-service.main" />
       </profile>
     </annotationProcessing>

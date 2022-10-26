@@ -4,13 +4,13 @@ import com.burak.dto.request.UserProfileSaveRequestDto;
 import com.burak.dto.request.UserProfileUpdateRequestDto;
 import com.burak.exception.ErrorType;
 import com.burak.exception.UserServiceException;
+import com.burak.manager.IElasticSearchManager;
 import com.burak.repository.IUserProfileRepository;
 import com.burak.repository.entity.UserProfile;
 import com.burak.utility.JwtTokenManager;
 import com.burak.utility.ServiceManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,19 +22,22 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
     private final JwtTokenManager jwtTokenManager;
 
     private final CacheManager cacheManager;
-    public UserProfileService(IUserProfileRepository iUserProfileRepository, JwtTokenManager jwtTokenManager, CacheManager cacheManager) {
+
+    private final IElasticSearchManager iElasticSearchManager;
+    public UserProfileService(IUserProfileRepository iUserProfileRepository, JwtTokenManager jwtTokenManager, CacheManager cacheManager, IElasticSearchManager iElasticSearchManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
-
         this.jwtTokenManager = jwtTokenManager;
         this.cacheManager = cacheManager;
+        this.iElasticSearchManager = iElasticSearchManager;
     }
 
     public Boolean save(UserProfileSaveRequestDto userProfileSaveRequestDto) {
-        save(UserProfile.builder().userName(userProfileSaveRequestDto.getUserName()).authId(userProfileSaveRequestDto.getAuthId())
+       UserProfile userProfile =  save(UserProfile.builder().userName(userProfileSaveRequestDto.getUserName()).authId(userProfileSaveRequestDto.getAuthId())
                 .email(userProfileSaveRequestDto.getEmail())
 
                 .build());
+       iElasticSearchManager.save(userProfile);
         return true;
     }
 
@@ -54,6 +57,7 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
         userProfile.setName(userProfileUpdateRequestDto.getName());
         userProfile.setSurName(userProfileUpdateRequestDto.getSurName());
         save(userProfile);
+        iElasticSearchManager.update(userProfile);
         return true;
 
     }

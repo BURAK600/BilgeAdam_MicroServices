@@ -44,9 +44,10 @@ public class UserProfileController {
     public ResponseEntity<UserProfile> findById(){
         return null;
     }
-    @PostMapping(USERPROFILE_LIST)
+    @GetMapping(USERPROFILE_LIST)
     public ResponseEntity<List<UserProfile>> userList(){
-        return null;
+        List<UserProfile> list = userProfileService.findAll();
+        return ResponseEntity.ok(list);
     }
 
     // REDIS kullanımı
