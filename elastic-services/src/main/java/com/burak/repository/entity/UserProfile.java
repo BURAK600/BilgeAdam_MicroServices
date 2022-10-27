@@ -18,7 +18,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Document(indexName = "userprofile")
 public class UserProfile {
     @Id
-    private long id;
+    private String id;
+    private Long userId;
     private Long authId;
     private String userName;
     private String name;

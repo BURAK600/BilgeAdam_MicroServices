@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface IUserProfileRepository extends ElasticsearchRepository<UserProfile, Long> {
 
     Optional<UserProfile> findOptionalByAuthId(Long authId);
-
+Iterable<UserProfile> findByUserNameContaining(String userName);
 
 }

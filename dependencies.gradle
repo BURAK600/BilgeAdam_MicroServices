@@ -6,7 +6,9 @@ ext{
             mapstruct      : "1.5.2.Final",
             postgresql     : "42.5.0",
             swagger        : "1.6.12",
-            auth0          : "4.1.0"
+            auth0          : "4.1.0",
+            graphql         : "13.0.0",
+            graphiql       : "11.1.0"
     ]
 
 
@@ -44,5 +46,12 @@ ext{
             springDataRedis         : "org.springframework.boot:spring-boot-starter-data-redis:$versions.springBoot",
             // Elastic Search için gerekli data bağımlılıkları
             springDataElasticSearch : "org.springframework.boot:spring-boot-starter-data-elasticsearch:$versions.springBoot",
+
+            // GraphQL için gerekli bağımlılıklar
+            springGraphQL           : "com.graphql-java-kickstart:graphql-spring-boot-starter:$versions.graphql",
+            springGraphiQL          : "com.graphql-java-kickstart:graphiql-spring-boot-starter:$versions.graphiql",
+            springGraphQLTools      : "com.graphql-java-kickstart:graphql-java-tools:$versions.graphql",
+
+
     ]
 }

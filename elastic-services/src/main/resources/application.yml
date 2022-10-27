@@ -11,7 +11,7 @@ spring:
 
 myapplication:
   user-service:
-    feign-client: http://localhost:9096/api/v1/userprofile
+    feign-client: http://localhost:9096/api/v1
 
 # JWT
 myjwt:

@@ -6,5 +6,8 @@ buildscript {
 
 dependencies {
     implementation libs.springDataElasticSearch
+    implementation libs.springGraphQL
+    implementation libs.springGraphiQL
+    implementation libs.springGraphQLTools
 
 }

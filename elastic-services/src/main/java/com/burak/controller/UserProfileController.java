@@ -1,6 +1,7 @@
 package com.burak.controller;
 
 
+import com.burak.dto.request.UserProfileRequestDto;
 import com.burak.repository.entity.UserProfile;
 import com.burak.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class UserProfileController {
     private final UserProfileService userProfileService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<Void> save(@RequestBody UserProfile userProfile){
-        userProfileService.save(userProfile);
+    public ResponseEntity<Void> save(@RequestBody UserProfileRequestDto userProfileRequestDto){
+        userProfileService.save(userProfileRequestDto);
         return ResponseEntity.ok().build();
     }
 

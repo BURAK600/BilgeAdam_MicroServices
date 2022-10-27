@@ -23,7 +23,13 @@ public class UserComponent {
     @PostConstruct
     public void firstRun(){
         List<UserProfile> userProfiles = iUserProfileManager.userList().getBody();
-        userProfileService.saveAll(userProfiles);
+        userProfiles.forEach(userProfile -> {
+            userProfile.setId(null);
+            userProfile.setUserId(Long.getLong(userProfile.getId()));
+
+            userProfileService.save(userProfile);
+
+        });
 
     }
 }

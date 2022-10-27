@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.burak.constants.ApiUrls.USERPROFILE_LIST;
 
-@FeignClient(name = "user-service", url = "${myapplication.user-service.feign-client}", decode404 = true)
+@FeignClient(name = "user-service", url = "${myapplication.user-service.feign-client}/userprofile", decode404 = true)
 public interface IUserProfileManager {
 
     @GetMapping(USERPROFILE_LIST)
