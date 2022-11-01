@@ -23,7 +23,10 @@ public class AuthRegisterRequestDto {
    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
            message = "Şifre en az 8 karakterden oluşmalıdır. En az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter içermelidir.")
    @Size(min = 8, max = 64)
+
    private String password;
+
+
    @Email(message = "Gecerli bir email adresi girilmelidir.")
    private String email;
    private String admincode;

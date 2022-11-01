@@ -6,6 +6,9 @@ import com.burak.repository.entity.UserProfile;
 import com.burak.service.UserProfileService;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +63,21 @@ public class UserProfileController {
     @PostMapping("/savecachable")
     public ResponseEntity<Void> updateUser(@RequestBody UserProfile userProfile){
         userProfileService.updateCacheReset(userProfile);
+        return ResponseEntity.ok().build();
+    }
+@GetMapping("/getallpage")
+    public ResponseEntity<Page<UserProfile>> getAllPage(int pageSize, int pageNumber, String parameter, String direction){
+        return ResponseEntity.ok(userProfileService.getAllPage(pageSize,pageNumber,parameter,direction));
+    }
+
+    @GetMapping("/getallslice")
+    public ResponseEntity<Slice<UserProfile>> getAllSlice(int pageSize, int pageNumber, String parameter, String direction){
+        return ResponseEntity.ok(userProfileService.getAllPage(pageSize,pageNumber,parameter,direction));
+    }
+
+@PostMapping("/saveall")
+    public ResponseEntity<Void> saveAll(List<UserProfileSaveRequestDto> dtos){
+        dtos.forEach(dto->userProfileService.save(dto));
         return ResponseEntity.ok().build();
     }
 }

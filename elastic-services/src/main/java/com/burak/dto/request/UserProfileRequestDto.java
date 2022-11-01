@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class UserProfileRequestDto {
-
-
     private Long id;
     private Long authId;
     private String userName;

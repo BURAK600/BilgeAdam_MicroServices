@@ -11,6 +11,10 @@ import com.burak.utility.JwtTokenManager;
 import com.burak.utility.ServiceManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -93,4 +97,33 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
 
         cacheManager.getCache("uppercase").evict(userProfile.getAuthId());
     }
+    /**
+     * 500 adet kayıt var
+     * - 10 'ar adet kayıt göstermek istediğimde 50 adet sayfa oluşur.
+     * 2. istediğimde 21-30 kayıtlar gösterilir.
+     *
+     * @param pageSize -> her seferinde kaç kayıt dönecegini belirler
+     * @param currentPageNumber -> geçerli sayfanını hangisi olduğunu belirler.
+     * @param sortParameter -> sıralama isleminin hangi kolona göre yapılacagını belirler
+     * @param sortDirection -> sıralama yönü asc, desc
+     *
+     *
+     */
+
+    public Page<UserProfile> getAllPage(int pageSize, int currentPageNumber, String sortParameter, String sortDirection){
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortParameter);
+        Pageable pageable = PageRequest.of(currentPageNumber,pageSize, sort );
+        return iUserProfileRepository.findAll(pageable);
+    }
+
+    public Page<UserProfile> getAllSlice(int pageSize, int currentPageNumber, String sortParameter, String sortDirection){
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortParameter);
+        Pageable pageable = PageRequest.of(currentPageNumber,pageSize, sort );
+        return iUserProfileRepository.findAll(pageable);
+    }
+
+
+
 }

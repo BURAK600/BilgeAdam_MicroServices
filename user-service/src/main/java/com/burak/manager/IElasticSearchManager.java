@@ -19,3 +19,8 @@ public interface IElasticSearchManager {
     @PostMapping(UPDATE)
     ResponseEntity<Void> update(@RequestBody UserProfile userProfile);
 }
+
+
+
+
+

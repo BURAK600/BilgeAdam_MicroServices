@@ -30,6 +30,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
         this.iUserProfileManager = iUserProfileManager;
     }
 
+
+
+
+
     public Boolean save(AuthRegisterRequestDto authRegisterRequestDto){
         Auth auth = Auth.builder().userName(authRegisterRequestDto.getUserName()).
                 password(authRegisterRequestDto.getPassword()).roles(Roles.ROLE_USER)
@@ -52,6 +56,8 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return false;
 
     }
+
+
 
     public String dologin(AuthLoginRequestDto authLoginRequestDto) {
         Optional<Auth> auth = repository.findOptionalByUserNameAndPassword(authLoginRequestDto.getUserName(),
