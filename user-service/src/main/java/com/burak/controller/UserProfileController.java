@@ -76,7 +76,7 @@ public class UserProfileController {
     }
 
 @PostMapping("/saveall")
-    public ResponseEntity<Void> saveAll(List<UserProfileSaveRequestDto> dtos){
+    public ResponseEntity<Void> saveAll(@RequestBody List<UserProfileSaveRequestDto> dtos){
         dtos.forEach(dto->userProfileService.save(dto));
         return ResponseEntity.ok().build();
     }

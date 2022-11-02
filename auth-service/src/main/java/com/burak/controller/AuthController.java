@@ -2,6 +2,7 @@ package com.burak.controller;
 
 import com.burak.dto.request.AuthLoginRequestDto;
 import com.burak.dto.request.AuthRegisterRequestDto;
+import com.burak.rabbitmq.producer.MessageProducer;
 import com.burak.repository.entity.Auth;
 import com.burak.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import static com.burak.constants.ApiUrls.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final MessageProducer messageProducer;
 
     @PostMapping(DOLOGIN)
     public ResponseEntity<String> dologin(@RequestBody @Valid AuthLoginRequestDto authLoginRequestDto){
@@ -39,6 +41,11 @@ public class AuthController {
     public ResponseEntity<String> hello(){
         return ResponseEntity.ok("Hello!!");
 
+    }
+    @PostMapping("/sendmessage")
+    public ResponseEntity<Void> sendMessage(String message, Long code){
+        messageProducer.sendMessage(message, code);
+        return ResponseEntity.ok().build();
     }
 
 

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserProfileService extends ServiceManager<UserProfile, Long> {
+public class UserProfileService extends ServiceManager<UserProfile,String> {
 
     private final IUserProfileRepository iUserProfileRepository;
     private final JwtTokenManager jwtTokenManager;
@@ -41,7 +41,7 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
                 .email(userProfileSaveRequestDto.getEmail())
 
                 .build());
-       iElasticSearchManager.save(userProfile);
+//       iElasticSearchManager.save(userProfile);
         return true;
     }
 
@@ -61,7 +61,7 @@ public class UserProfileService extends ServiceManager<UserProfile, Long> {
         userProfile.setName(userProfileUpdateRequestDto.getName());
         userProfile.setSurName(userProfileUpdateRequestDto.getSurName());
         save(userProfile);
-        iElasticSearchManager.update(userProfile);
+//        iElasticSearchManager.update(userProfile);
         return true;
 
     }

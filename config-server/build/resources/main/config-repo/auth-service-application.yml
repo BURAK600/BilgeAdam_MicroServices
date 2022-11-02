@@ -2,6 +2,11 @@ server:
   port: 9088
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: bilgeadmin
+    password: bilge!
   zipkin:
     enabled: true
     base-url: http://localhost:9411
@@ -9,7 +14,7 @@ spring:
       name: auth-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://34.173.108.167:1111/java3auth
+    url: jdbc:postgresql://localhost:5432/java3auth
     username: postgres
     password: root
   jpa:
