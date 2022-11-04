@@ -57,5 +57,8 @@ ext{
             // RabitMQ
             springBootRabbitMQ      : "org.springframework.boot:spring-boot-starter-amqp:$versions.springBoot",
 
+            // Spring Security - güvenlik bağımlılıkları
+            springBootStarterSecurity: "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
+
     ]
 }

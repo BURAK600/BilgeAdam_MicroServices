@@ -2,6 +2,8 @@ package com.burak.controller;
 
 import com.burak.dto.request.AuthLoginRequestDto;
 import com.burak.dto.request.AuthRegisterRequestDto;
+import com.burak.dto.response.LoginResponseDto;
+import com.burak.dto.response.RegisterResponseDto;
 import com.burak.rabbitmq.producer.MessageProducer;
 import com.burak.repository.entity.Auth;
 import com.burak.service.AuthService;
@@ -22,19 +24,31 @@ public class AuthController {
     private final MessageProducer messageProducer;
 
     @PostMapping(DOLOGIN)
-    public ResponseEntity<String> dologin(@RequestBody @Valid AuthLoginRequestDto authLoginRequestDto){
+    public ResponseEntity<LoginResponseDto> dologin(@RequestBody @Valid AuthLoginRequestDto authLoginRequestDto){
 
-        return ResponseEntity.ok(authService.dologin(authLoginRequestDto));
+        String token = authService.dologin(authLoginRequestDto);
+
+        return ResponseEntity.ok(LoginResponseDto.builder()
+                        .token(token)
+                        .code(110)
+                        .message("Giriş başarılı")
+                .build());
     }
 
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Void> register(@RequestBody @Valid AuthRegisterRequestDto authRegisterRequestDto){
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid AuthRegisterRequestDto authRegisterRequestDto){
 
         if(authService.save(authRegisterRequestDto)){
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(RegisterResponseDto.builder()
+                            .code(100L)
+                            .message("kayıt başarılı")
+                    .build());
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(RegisterResponseDto.builder()
+                .message("kayıt başarısız")
+                        .code(101L)
+                .build());
     }
 
     @GetMapping("/hello")

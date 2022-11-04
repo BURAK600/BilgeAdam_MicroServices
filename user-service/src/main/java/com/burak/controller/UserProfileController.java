@@ -1,8 +1,9 @@
 package com.burak.controller;
 
-import com.burak.dto.request.UserProfileSaveRequestDto;
-import com.burak.dto.request.UserProfileUpdateRequestDto;
+import com.burak.dto.request.*;
+import com.burak.repository.entity.Online;
 import com.burak.repository.entity.UserProfile;
+import com.burak.service.OnlineService;
 import com.burak.service.UserProfileService;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,10 @@ import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.burak.constants.ApiUrls.*;
@@ -22,6 +25,7 @@ import static com.burak.constants.ApiUrls.*;
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
+    private final OnlineService onlineService;
 
     /**
      * Kullanıcı kaydı, auth service  te yaplıyor ve burada olan bilgiler userprofile-serivce e gönderiliyor.
@@ -32,6 +36,26 @@ public class UserProfileController {
      *
      * @return
      */
+
+
+    @PostMapping("/doonline")
+    public ResponseEntity<Void> doOnline(DoOnlineRequestDto doOnlineRequestDto){
+        onlineService.doOnline(doOnlineRequestDto.getToken());
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/dooffline")
+    public ResponseEntity<Void> doOffline(DoOfflineRequestDto doOfflineRequestDto){
+        onlineService.doOnline(doOfflineRequestDto.getToken());
+        return ResponseEntity.ok().build();
+
+    }
+    @PostMapping("getallonlinelist")
+    public ResponseEntity<List<Online>> getAllOnlineList(GetAllOnlineListRequestDto getAllOnlineListRequestDto){
+        return ResponseEntity.ok(onlineService.getAllOnList());
+
+
+    }
+
 
     @PostMapping(SAVE)
     public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto userProfileSaveRequestDto){
@@ -48,6 +72,7 @@ public class UserProfileController {
         return null;
     }
     @GetMapping(USERPROFILE_LIST)
+    @PreAuthorize("hasAuthority('ADMIN_ARKADAS') or hasAuthority('YETKILI_BIR_ABIMIZDIR')")
     public ResponseEntity<List<UserProfile>> userList(){
         List<UserProfile> list = userProfileService.findAll();
         return ResponseEntity.ok(list);
@@ -79,5 +104,11 @@ public class UserProfileController {
     public ResponseEntity<Void> saveAll(@RequestBody List<UserProfileSaveRequestDto> dtos){
         dtos.forEach(dto->userProfileService.save(dto));
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/getmyprofile")
+    public ResponseEntity<UserProfile> getMyProfile(@RequestBody @Valid GetMyProfileRequestDto getMyProfileRequestDto){
+        return ResponseEntity.ok(userProfileService.findByToken(getMyProfileRequestDto));
+
     }
 }

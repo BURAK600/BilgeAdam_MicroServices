@@ -18,10 +18,13 @@ public class ServiceManager<T, ID> implements IService<T, ID> {
      * @return
      */
     private final MongoRepository<T, ID> repository;
-    public ServiceManager(IUserProfileRepository repository) {
 
-        this.repository = (MongoRepository<T, ID>) repository;
+    public ServiceManager(MongoRepository<T,ID> repository) {
+
+        this.repository = repository;
     }
+
+
 
     @Override
     public T save(T t) {

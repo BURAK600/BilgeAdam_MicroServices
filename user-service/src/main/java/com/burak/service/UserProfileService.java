@@ -1,5 +1,6 @@
 package com.burak.service;
 
+import com.burak.dto.request.GetMyProfileRequestDto;
 import com.burak.dto.request.UserProfileSaveRequestDto;
 import com.burak.dto.request.UserProfileUpdateRequestDto;
 import com.burak.exception.ErrorType;
@@ -34,6 +35,10 @@ public class UserProfileService extends ServiceManager<UserProfile,String> {
         this.jwtTokenManager = jwtTokenManager;
         this.cacheManager = cacheManager;
         this.iElasticSearchManager = iElasticSearchManager;
+    }
+
+    public Optional<UserProfile> findByAuthId(Long authId){
+        return iUserProfileRepository.findOptionalByAuthId(authId);
     }
 
     public Boolean save(UserProfileSaveRequestDto userProfileSaveRequestDto) {
@@ -124,6 +129,15 @@ public class UserProfileService extends ServiceManager<UserProfile,String> {
         return iUserProfileRepository.findAll(pageable);
     }
 
+    public UserProfile findByToken(GetMyProfileRequestDto getMyProfileRequestDto){
+        Optional<Long> authId = jwtTokenManager.getByIdFromToken(getMyProfileRequestDto.getToken());
+        if(authId.isEmpty()) throw new UserServiceException(ErrorType.GECERSIZ_ID);
+        Optional<UserProfile> userProfile = iUserProfileRepository.findOptionalByAuthId(authId.get());
+        if(userProfile.isEmpty()) throw new UserServiceException(ErrorType.KULLANICI_BULUNAMADI);
+            return userProfile.get();
+        }
+    }
 
 
-}
+
+
