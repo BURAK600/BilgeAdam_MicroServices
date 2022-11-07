@@ -2,10 +2,10 @@ package com.burak.config.security;
 
 
 import com.burak.dto.request.GetAllRolesRequestDto;
+import com.burak.dto.response.FindByAuthIdResponseDto;
 import com.burak.manager.AuthServiceManager;
-import com.burak.repository.entity.UserProfile;
+
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.LifecycleState;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -28,12 +28,12 @@ public class JwtMyUser implements UserDetailsService {
         return null;
     }
 
-    public UserDetails loadByAuthId(UserProfile profile){
+    public UserDetails loadByAuthId(FindByAuthIdResponseDto profile, Long authId){
 
         List<String> roles = authServiceManager.getAllRolesBuAuthId(
 
                 GetAllRolesRequestDto.builder()
-                        .authId(profile.getAuthId())
+                        .authId(authId)
                         .build()
         ).getBody();
 

@@ -1,5 +1,6 @@
 package com.burak.service;
 
+import com.burak.dto.request.FindByAuthIdRequestDto;
 import com.burak.dto.request.GetMyProfileRequestDto;
 import com.burak.dto.request.UserProfileSaveRequestDto;
 import com.burak.dto.request.UserProfileUpdateRequestDto;
@@ -136,7 +137,11 @@ public class UserProfileService extends ServiceManager<UserProfile,String> {
         if(userProfile.isEmpty()) throw new UserServiceException(ErrorType.KULLANICI_BULUNAMADI);
             return userProfile.get();
         }
+
+    public UserProfile findByAuthid(FindByAuthIdRequestDto dto) {
+        return iUserProfileRepository.findOptionalByAuthId(dto.getAuthId()).get();
     }
+}
 
 
 

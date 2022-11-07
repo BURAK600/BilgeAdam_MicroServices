@@ -1,14 +1,13 @@
 package com.burak.config.security;
 
-import com.burak.repository.entity.UserProfile;
-import com.burak.service.UserProfileService;
+import com.burak.dto.request.FindByAuthIdRequestDto;
+import com.burak.dto.response.FindByAuthIdResponseDto;
+import com.burak.manager.IUserServiceManager;
 import com.burak.utility.JwtTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -23,7 +22,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     JwtTokenManager jwtTokenManager;
     @Autowired
-    UserProfileService userProfileService;
+    IUserServiceManager iUserServiceManager;
     @Autowired
     JwtMyUser jwtMyUser;
 
@@ -38,12 +37,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Optional<Long> authId = jwtTokenManager.getByIdFromToken(token);
 
             if(authId.isPresent()){
-             Optional<UserProfile> userProfile  = userProfileService.findByAuthId(authId.get());
-             if(userProfile.isPresent()){
+             FindByAuthIdResponseDto userProfile  = iUserServiceManager.findByAuthid(FindByAuthIdRequestDto.builder()
+                     .authId(authId.get()).build()).getBody();
+
+
+
+             if(userProfile.getUserId()!=null){
 /**
  * JwtMYUSER
  */
-                 UserDetails userDetails = jwtMyUser.loadByAuthId((userProfile.get()));
+                 UserDetails userDetails = jwtMyUser.loadByAuthId(userProfile, authId.get());
                  UsernamePasswordAuthenticationToken authenticationToken =
                          new UsernamePasswordAuthenticationToken( userDetails,
                                  null, userDetails.getAuthorities());

@@ -1,16 +1,12 @@
 server:
-  port: 9096
+  port: 9093
 
 spring:
   security:
     user:
       name: burak
       password: 123456
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: bilgeadmin
-    password: bilge!
+
   data:
     mongodb:
       host: 34.122.175.53
@@ -32,7 +28,6 @@ myredis:
 myapplication:
   auth-service:
     url: http://localhost:9088/api/v1/auth
-
   user-service:
     feign-client: http://localhost:9096/api/v1/userprofile
   elastic-service:

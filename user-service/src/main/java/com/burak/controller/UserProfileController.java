@@ -1,6 +1,7 @@
 package com.burak.controller;
 
 import com.burak.dto.request.*;
+import com.burak.dto.response.FindByAuthIdResponseDto;
 import com.burak.repository.entity.Online;
 import com.burak.repository.entity.UserProfile;
 import com.burak.service.OnlineService;
@@ -72,7 +73,7 @@ public class UserProfileController {
         return null;
     }
     @GetMapping(USERPROFILE_LIST)
-    @PreAuthorize("hasAuthority('ADMIN_ARKADAS') or hasAuthority('YETKILI_BIR_ABIMIZDIR')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     public ResponseEntity<List<UserProfile>> userList(){
         List<UserProfile> list = userProfileService.findAll();
         return ResponseEntity.ok(list);
@@ -106,9 +107,29 @@ public class UserProfileController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/getall")
+        public ResponseEntity<List<UserProfile>> getAll(){
+        return ResponseEntity.ok(userProfileService.findAll());
+        }
+
     @PostMapping("/getmyprofile")
     public ResponseEntity<UserProfile> getMyProfile(@RequestBody @Valid GetMyProfileRequestDto getMyProfileRequestDto){
         return ResponseEntity.ok(userProfileService.findByToken(getMyProfileRequestDto));
+
+    }
+
+    @PostMapping("/findbyauthid")
+    public ResponseEntity<FindByAuthIdResponseDto> findByAuthid(@RequestBody FindByAuthIdRequestDto dto){
+
+        UserProfile userProfile = userProfileService.findByAuthid(dto);
+
+
+        return ResponseEntity.ok(FindByAuthIdResponseDto.builder()
+                        .name(userProfile.getName())
+                        .userId(userProfile.getId())
+                        .userName(userProfile.getUserName())
+
+                .build());
 
     }
 }

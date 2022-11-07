@@ -14,6 +14,7 @@
         <module name="BilgeAdam_MicroServices.main" />
         <module name="BilgeAdam_MicroServices.elastic-services.main" />
         <module name="BilgeAdam_MicroServices.api-gateway-service.main" />
+        <module name="BilgeAdam_MicroServices.main-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="18" />
